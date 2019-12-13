@@ -6,7 +6,14 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     restaurants: [],
-    users: [],
+    users: [
+      {
+        id:1,
+        name: "Tiago",
+        email: "admin@email.com",
+        password: "password"
+      }
+    ],
     dishes: []
   },
   mutations: {},

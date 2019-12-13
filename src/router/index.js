@@ -18,7 +18,23 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path: "/login",
+    name: "login",
+   //component: "LoginPage"
+  },
+  {
+    path: "/register",
+    name: "register",
+    //component: "RegisterPage"
+  },
+  // otherwise redirect to home
+  {
+    path: "*",
+    redirect: "/"
   }
+  
 ];
 
 const router = new VueRouter({
@@ -26,5 +42,17 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+/*
+router.beforeEach((to, from, next) => {
+  const publicPages = ["/login", "/register"];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem("user");
+
+  if (authRequired && !loggedIn) {
+    return next("/login");    
+  }
+  next();
+})
+*/
 
 export default router;
