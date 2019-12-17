@@ -1,27 +1,5 @@
 <template>
-  <div class="home">
-    <h1>GuessApp</h1>
-    <!-- Name -->
-    <h3>GIVE ME YOUR NAME</h3>
-    <input type="text" v-model="name">
-
-    <!-- Number -->
-    <h3>GUESS THE NUMBER (between 1 and {{getMaxLimit}}):</h3>
-    <p>
-      <input type="number" v-model="attemptNumber">
-    </p>
-    (number of attempts: {{nAttempts}}/{{getMaxAttempts}})
-    <!-- Guess button -->
-    <p>
-      <button @click="attempt" :disabled="gameover">GUESS</button>
-    </p>
-
-    <!-- Feedback -->
-    <p v-html="feedback"></p>
-
-    <!-- Link to home -->
-    <router-link :to="{name:'home'}">back</router-link>
-  </div>
+  <div class="home"></div>
 </template>
 
 <script>
@@ -67,12 +45,9 @@ export default {
       // If the users reaches the attempt's limit
       if (this.nAttempts == this.getMaxAttempts) {
         this.gameover = true;
-        this.feedback += `<br>Reached the limit of attempts ${
-          this.getMaxAttempts
-        }`;
+        this.feedback += `<br>Reached the limit of attempts ${this.getMaxAttempts}`;
       }
     }
   }
 };
 </script>
-

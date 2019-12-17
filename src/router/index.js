@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-
+// import Store from "../store/index.js";
 Vue.use(VueRouter);
 
 const routes = [
@@ -22,19 +22,26 @@ const routes = [
   {
     path: "/login",
     name: "login",
-   //component: "LoginPage"
+    component: () => import("../components/Login.vue")
   },
   {
     path: "/register",
     name: "register",
-    //component: "RegisterPage"
+    component: () => import("../components/Register.vue")
+  },
+  {
+    path: "/secure",
+    name: "secure",
+    component: () => import("../components/Secure.vue"),
+    meta: {
+      requiresAuth: true
+    }
   },
   // otherwise redirect to home
   {
     path: "*",
     redirect: "/"
   }
-  
 ];
 
 const router = new VueRouter({
@@ -42,17 +49,17 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
-/*
-router.beforeEach((to, from, next) => {
-  const publicPages = ["/login", "/register"];
-  const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem("user");
 
-  if (authRequired && !loggedIn) {
-    return next("/login");    
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next();
+      return;
+    }
+    next("/login");
+  } else {
+    next();
   }
-  next();
-})
-*/
+});
 
 export default router;
